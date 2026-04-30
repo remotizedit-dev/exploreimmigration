@@ -5,18 +5,19 @@ import { Outlet } from 'react-router-dom';
 
 export default function Layout() {
   const [showChatTooltip, setShowChatTooltip] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   return (
-    <div className="font-sans text-ink bg-bg min-h-screen">
+    <div className="font-sans text-ink bg-bg min-h-screen overflow-x-hidden">
       {/* Header */}
       <header className="w-full flex-col">
         {/* Top Bar */}
-        <div className="bg-bg border-b border-ink/10 text-accent font-medium py-1.5 px-4 md:px-8 text-xs sm:text-sm flex flex-col sm:flex-row justify-between items-center">
-          <div className="flex items-center tracking-widest text-[10px] uppercase">
+        <div className="bg-bg border-b border-ink/10 text-accent font-medium py-2 px-4 md:px-8 text-[9px] sm:text-xs md:text-sm flex flex-col sm:flex-row justify-between items-center gap-2">
+          <div className="flex items-center tracking-wider sm:tracking-widest uppercase text-center sm:text-left leading-tight">
             <span>Call Us +1(587)830 5061 - info@exploreimmigration.ca</span>
           </div>
-          <div className="flex items-center space-x-3 mt-2 sm:mt-0 text-accent">
+          <div className="flex items-center space-x-4 text-accent">
             <a href="#" className="hover:text-ink transition-colors"><Facebook className="w-4 h-4 fill-current"/></a>
             <a href="#" className="hover:text-ink transition-colors"><Linkedin className="w-4 h-4 fill-current"/></a>
           </div>
@@ -24,21 +25,34 @@ export default function Layout() {
 
         {/* Main Nav */}
         <div className="bg-bg sticky top-0 z-50 border-b border-ink/10">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex flex-col lg:flex-row justify-between items-center">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex justify-between items-center relative">
             {/* Logo area */}
-            <div className="flex items-center mb-4 lg:mb-0 cursor-pointer">
+            <div className="flex items-center cursor-pointer">
               <Link to="/">
-                <img src="https://res.cloudinary.com/dyp8op8ov/image/upload/v1777382352/explore-immigration-logo_ylfk6g.png" alt="Explore Immigration Logo" className="h-14 w-auto object-contain" />
+                <img src="https://res.cloudinary.com/dyp8op8ov/image/upload/v1777382352/explore-immigration-logo_ylfk6g.png" alt="Explore Immigration Logo" className="h-10 sm:h-14 w-auto object-contain" />
               </Link>
             </div>
-            {/* Navigation Links */}
-            <nav className="flex flex-wrap justify-center items-center gap-4 lg:gap-6 text-[10px] uppercase tracking-[2px] font-semibold text-ink">
-              <Link to="/" className={`${location.pathname === '/' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-2 sm:pb-0`}>EXPLORE IMMIGRATION</Link>
-              <Link to="/about-us" className={`${location.pathname === '/about-us' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-2 sm:pb-0`}>ABOUT</Link>
+
+            {/* Mobile Menu Toggle */}
+            <button 
+              className="lg:hidden p-2 text-ink"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <div className="space-y-1.5">
+                <div className="w-6 h-0.5 bg-ink"></div>
+                <div className="w-4 h-0.5 bg-ink ml-auto"></div>
+                <div className="w-6 h-0.5 bg-ink"></div>
+              </div>}
+            </button>
+
+            {/* Navigation Links - Desktop */}
+            <nav className="hidden lg:flex flex-wrap justify-center items-center gap-6 text-[10px] uppercase tracking-[2px] font-semibold text-ink">
+              <Link to="/" className={`${location.pathname === '/' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition`}>EXPLORE</Link>
+              <Link to="/about-us" className={`${location.pathname === '/about-us' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition`}>ABOUT</Link>
               
-              <div className="relative group/nav flex items-center h-full pb-2 sm:pb-0 cursor-pointer">
-                <Link to="/services" className={`${location.pathname.startsWith('/services') ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition`}>SERVICES</Link>
-                <div className="absolute left-0 top-[100%] pt-2 w-64 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50">
+              <div className="relative group/nav flex items-center h-full cursor-pointer">
+                <Link to="/services" className={`${location.pathname.startsWith('/services') ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-4 mt-4 inline-block`}>SERVICES</Link>
+                <div className="absolute left-0 top-[100%] pt-0 w-64 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 -mt-1">
                   <div className="bg-[#242424] text-[#d4d4d4] flex flex-col shadow-2xl">
                     {[
                       { 
@@ -119,10 +133,10 @@ export default function Layout() {
                 </div>
               </div>
 
-              <Link to="/assessment" className={`${location.pathname === '/assessment' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-2 sm:pb-0`}>ASSESSMENT</Link>
-              <div className="relative group/nav flex items-center h-full pb-2 sm:pb-0 cursor-pointer">
-                <Link to="/services/citizenship-by-investment/canada" className={`${location.pathname.startsWith('/services/citizenship-by-investment') ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-2 sm:pb-0`}>CITIZENSHIP BY INVESTMENT</Link>
-                <div className="absolute left-0 top-[100%] pt-2 w-64 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50">
+              <Link to="/assessment" className={`${location.pathname === '/assessment' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition`}>ASSESSMENT</Link>
+              <div className="relative group/nav flex items-center h-full cursor-pointer">
+                <Link to="/services/citizenship-by-investment/canada" className={`${location.pathname.startsWith('/services/citizenship-by-investment') ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-4 mt-4 inline-block`}>CITIZENSHIP BY INVESTMENT</Link>
+                <div className="absolute left-0 top-[100%] pt-0 w-64 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 z-50 -mt-1">
                   <div className="bg-[#242424] text-[#d4d4d4] flex flex-col shadow-2xl">
                     <Link to="/services/citizenship-by-investment/canada" className="py-3.5 px-5 border-b border-white/5 hover:bg-white/10 hover:text-white transition-colors flex justify-between items-center"><span className="text-[13px] font-normal normal-case tracking-normal">Canada</span></Link>
                     <Link to="/services/citizenship-by-investment/usa" className="py-3.5 px-5 border-b border-white/5 hover:bg-white/10 hover:text-white transition-colors flex justify-between items-center"><span className="text-[13px] font-normal normal-case tracking-normal">USA</span></Link>
@@ -130,9 +144,24 @@ export default function Layout() {
                   </div>
                 </div>
               </div>
-              <Link to="/consultation" className={`${location.pathname === '/consultation' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-2 sm:pb-0`}>CONSULTATION</Link>
-              <Link to="/contact" className={`${location.pathname === '/contact' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition pb-2 sm:pb-0`}>CONTACT</Link>
+              <Link to="/consultation" className={`${location.pathname === '/consultation' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition`}>CONSULTATION</Link>
+              <Link to="/contact" className={`${location.pathname === '/contact' ? 'text-[#E31B23]' : 'text-ink'} hover:text-[#E31B23] transition`}>CONTACT</Link>
             </nav>
+
+            {/* Navigation Links - Mobile */}
+            {isMenuOpen && (
+              <div className="lg:hidden absolute top-full left-0 w-full bg-bg border-b border-ink/10 shadow-xl animate-in fade-in slide-in-from-top-4 duration-300 z-[100]">
+                <nav className="flex flex-col p-6 space-y-4 text-[11px] uppercase tracking-[2px] font-bold">
+                  <Link to="/" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === '/' ? 'text-[#E31B23]' : 'text-ink'}`}>EXPLORE</Link>
+                  <Link to="/about-us" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === '/about-us' ? 'text-[#E31B23]' : 'text-ink'}`}>ABOUT</Link>
+                  <Link to="/services" onClick={() => setIsMenuOpen(false)} className={`${location.pathname.startsWith('/services') ? 'text-[#E31B23]' : 'text-ink'}`}>SERVICES</Link>
+                  <Link to="/assessment" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === '/assessment' ? 'text-[#E31B23]' : 'text-ink'}`}>ASSESSMENT</Link>
+                  <Link to="/services/citizenship-by-investment/canada" onClick={() => setIsMenuOpen(false)} className={`${location.pathname.startsWith('/services/citizenship-by-investment') ? 'text-[#E31B23]' : 'text-ink'}`}>CITIZENSHIP BY INVESTMENT</Link>
+                  <Link to="/consultation" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === '/consultation' ? 'text-[#E31B23]' : 'text-ink'}`}>CONSULTATION</Link>
+                  <Link to="/contact" onClick={() => setIsMenuOpen(false)} className={`${location.pathname === '/contact' ? 'text-[#E31B23]' : 'text-ink'}`}>CONTACT</Link>
+                </nav>
+              </div>
+            )}
           </div>
         </div>
       </header>
