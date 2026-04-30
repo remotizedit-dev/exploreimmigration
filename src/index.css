@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-bg: #ffffff;
+  --color-ink: #1a1a1a;
+  --color-accent: #8b8378;
+  --color-accent-light: #e8e8e1;
+  --color-big-number: #ebebe5;
+  
+  --font-serif: 'Georgia', serif;
+  --font-sans: 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+}
